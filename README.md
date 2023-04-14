@@ -25,17 +25,15 @@ reproduced several times throughout the production of this work and the authors 
 #### Requirements
 The code requires python > 3.8
 further requirements can be installed by navigating to the project folder and running 
-
-'''
+```python
 pip install -r requirements.txt
-'''
-
+```
 #### Usage - Generating Networks
 The exact networks used in the paper can be found in the /nets/ folder. New networks can be produced using the 'Generate_Networks.py' script from the command line.
 
-'''
+```python
 python Generate_Networks.py
-'''
+```
 
 #### Usage - Running experiments
 We can then generate the convergence data from the three initial configurations by running with three different values of s.
@@ -43,6 +41,6 @@ s = 0 -> Low degree starting nodes
 s = 1 -> High degree starting nodes
 s = 2 -> Random degree starting nodes 
 
-'''
+```python
 python RunQvoter.py --s 0
-'''
+```
