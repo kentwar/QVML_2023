@@ -46,4 +46,4 @@ python RunQvoter.py --s 0
 ```
 
 #### Notes on Parallelisation
-This code is highly parallelised using the joblibs package. We use a cpu count of 30, which may produce errors on a computer with less nodes. In this case we direct the user to line 277 of the 'RunQvoter.py' file where they can modify the code to work with their own resources.
+This code is highly parallelised using the joblibs package. We use a cpu count of 30, which may produce errors on a computer with less nodes. In this case we direct the user to line 277 of the 'RunQvoter.py' file where they can modify the 'njobs = 30' variable to work with their own resources.
