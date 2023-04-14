@@ -17,6 +17,7 @@ applying machine learning methods to studies of dynamical patterns in complex ne
 Aruane M. Pineda, Paul Kent, Caroline L. Alvesa, J ̈urgen Branke, Colm Connaughto, Francisco A. Rodrigues
 
 ### Brief outline of code
+
 ####Purpose and disclaimer
 This code produces the networks used in the above paper and runs the Q-voter model experiments, producing the data used in the paper.
 While the random seed is not set in the code, which means the exact results produced in the paper will not be identically reproduced, the outcomes were
