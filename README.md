@@ -25,6 +25,7 @@ reproduced several times throughout the production of this work and the authors 
 #### Requirements
 The code requires python > 3.8
 further requirements can be installed by navigating to the project folder and running 
+
 '''
 pip install -r requirements.txt
 '''
@@ -41,6 +42,7 @@ We can then generate the convergence data from the three initial configurations 
 s = 0 -> Low degree starting nodes
 s = 1 -> High degree starting nodes
 s = 2 -> Random degree starting nodes 
+
 '''
 python RunQvoter.py --s 0
 '''
