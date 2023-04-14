@@ -14,7 +14,7 @@ importance with high accuracy. This generalized approach applies to dynamical pr
 applying machine learning methods to studies of dynamical patterns in complex network systems.
 
 ### Authors 
-Aruane M. Pineda, Paul Kent, Caroline L. Alves, J ̈urgen Branke, Colm Connaughton, Francisco A. Rodrigues
+[Aruane M. Pineda](https://github.com/Aruane), [Paul Kent](https://github.com/kentwar), Caroline L. Alves, J ̈urgen Branke, Colm Connaughton, Francisco A. Rodrigues
 
 ### Brief outline of code
 #### Purpose and disclaimer
