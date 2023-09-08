@@ -1,6 +1,5 @@
 # QVML_2023
-Code for the paper 'Machine learning for the prediction of q-voter model stationary state through complex network structures' Submitted 2023 - Journal of Computational Science
-
+Code for the paper 'Machine learning for the prediction of q-voter model stationary state through complex network structures' Submitted 2023 - Journal of Statistical Mechanics.
 
 
 # Abstract 
