@@ -3,17 +3,10 @@ Code for the paper 'Machine learning for the prediction of q-voter model station
 
 
 # Abstract 
-In network science, using structural features of systems to infer outcomes is crucial to understanding complex networks and their behaviors. Recently,
-researchers have suggested a machine-learning-based approach for interpreting dynamic patterns in complex network systems. In this study, such tech-
-niques are employed to estimate two outcomes, the time needed for reaching a stable state and the frequency of alterations in various complex networks
-within the q-voter model, by leveraging the topological characteristics of these networks. Analysis was conducted on a random configuration of the
-q-voter model and extended to two additional initial configurations, starting with high and low-degree nodes. This study reports excellent performance
-in predicting both outcomes, provides a breakdown of the key network topological features used for estimation and ranks network metrics in order of
-importance with high accuracy. This generalized approach applies to dynamical processes running on complex networks, representing a step towards
-applying machine learning methods to studies of dynamical patterns in complex network systems.
+In this paper, we consider machine learning algorithms to accurately predict two variables associated to the $Q$-voter model in complex networks, i.e., (i) the consensus time and (ii) the frequency of opinion changes. Leveraging nine topological measures of the underlying networks, we verify that the clustering coefficient (C) and information centrality (IC) emerge as the most important predictors for these outcomes. Notably, the machine learning algorithms demonstrate accuracy across three distinct initialization methods of the $Q$-voter model, including random selection and the involvement of high- and low-degree agents with positive opinions. By unraveling the intricate interplay between network structure and dynamics, this research sheds light on the underlying mechanisms responsible for polarization effects and other dynamic patterns in social systems. Adopting a holistic approach that comprehends the complexity of network systems, this study offers insights into the intricate dynamics associated with polarization effects and paves the way for investigating the structure and dynamics of complex systems through modern methods of machine learning.
 
 ### Authors 
-[Aruane M. Pineda](https://github.com/Aruane), [Paul Kent](https://github.com/kentwar), Caroline L. Alves, J ̈urgen Branke, Colm Connaughton, Francisco A. Rodrigues
+[Aruane M. Pineda](https://github.com/Aruane), [Paul Kent](https://github.com/kentwar), Colm Connaughton, Francisco A. Rodrigues
 
 ### Brief outline of code
 #### Purpose and disclaimer
