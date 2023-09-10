@@ -15,7 +15,7 @@ This repository contains the source code utilized for generating the network str
 As such, we are confident that users running this code will achieve comparable results and we encourage users to engage with the code and appreciate any feedback or suggestions for further improvement.
 
 #### Requirements
-The code requires python > 3.8
+The code requires python > 3.8 < 3.11
 further requirements can be installed by navigating to the project folder and running 
 ```python
 pip install -r requirements.txt
