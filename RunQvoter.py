@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import igraph
 import numba
-import numpy as np
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -25,7 +24,7 @@ experiments = ['barabasi','barabasi_05_nl','barabasi_15_nl','Wax','erdos','lfr',
 dirs = ['nets/barabasi/Barabasi_linear', 'nets/barabasi_05_nl/Barabasi05_nonlinear', 'nets/barabasi_15_nl/Barabasi15_nonlinear',
           'nets/Wax/Wax', 'nets/erdos/Erdos', 'nets/lfr/LFR','nets/Watts/Watts', 'nets/Regular/Regular','nets/Linear/Linear']
 
-for i in [8]:#range(0,:len(experiments)):      
+for i in [0]:#range(0,:len(experiments)):      
     exp = experiments[i]
     dir_ = dirs[i]
     print(exp)
@@ -87,37 +86,6 @@ for i in [8]:#range(0,:len(experiments)):
                     matriz[V1] = 0
                 else:
                     matriz[V1] = 1
-
-
-    # @numba.jit(nopython=True)
-    # def Qvoter2(adj_matrix, matriz, q, p, N):
-    #     sum_ = np.zeros(2)
-
-    #     nodes = np.arange(N)
-    #     for i in range(N):
-    #         V1 = np.random.choice(nodes)  # choose a random vertex from the network
-    #         prob = np.random.random()
-    #         if prob < (1 - p):  # conformity
-    #             v = np.nonzero(adj_matrix[V1])[0]  # list all neighbors of V1
-
-    #             if len(v) > 0:
-    #                 v_sel = np.random.choice(v, size=q, replace=True)  # select q neighbors within the list, with a chance of repetition
-
-    #                 # possible states that can assume 0 or 1: sum[0] and sum[1]
-    #                 sum_ = np.bincount(matriz[v_sel].astype(np.int64), minlength=2)
-
-    #                 if sum_[0] == q:
-    #                     matriz[V1] = 0
-    #                 elif sum_[1] == q:
-    #                     matriz[V1] = 1
-    #                 else:  # if it tied (sum[0] = sum[1])
-    #                     prob = np.random.random()
-    #                     if prob < 0.2:
-    #                         matriz[V1] = 1 - matriz[V1]
-    #         else:  
-    #             # nonconformity (change independent of neighbors)
-    #             prob = np.random.random()
-    #             matriz[V1] = int(prob >= 0.5)
 
     @numba.jit(nopython=True)
     def Qvoter2(adj_matrix, matriz, q, p, N):
@@ -183,12 +151,10 @@ for i in [8]:#range(0,:len(experiments)):
     for k in range(n_redes): 
         GBA= nx.read_edgelist(dir_+ str(k) + '.edgelist', nodetype=int)
         GBA = GBA.to_undirected() 
-        #connected_components = nx.connected_components(GBA)
-        #subgraphs = [GBA.subgraph(component) for component in connected_components]
-        #Gcc = sorted(subgraphs, key=len, reverse=True)
-        #GBAconnect=Gcc[0]
         ig_GBA = networkx_to_igraph(GBA)
-        #igraph is faster for most of the calculations
+
+        # NOTE : igraph is faster for most of the calculations, so we use these as a preference
+
         ig_clustering = ig_GBA.transitivity_local_undirected(mode="zero")
         nx_clustering = {node: c for node, c in zip(ig_GBA.vs["name"], ig_clustering)}
         C = mean_dic(nx_clustering)
@@ -200,20 +166,21 @@ for i in [8]:#range(0,:len(experiments)):
         nx_eigenvector_centrality = {node: ec for node, ec in zip(ig_GBA.vs["name"], ig_eigenvector_centrality)}
         EC = mean_dic(nx_eigenvector_centrality)
         SPL = ig_GBA.average_path_length(directed=False)
-        PC = ig_GBA.assortativity_degree(directed=False)
+        #PC = ig_GBA.assortativity_degree(directed=False)
+        PC = nx.degree_pearson_correlation_coefficient(GBA)
         IC= media_valores(nx.information_centrality(GBA))
         SC=media_valores(nx.subgraph_centrality(GBA))
         AC= media_valores(nx.approximate_current_flow_betweenness_centrality(GBA))
         ig_pagerank = ig_GBA.pagerank(directed=False, damping=0.85)
         nx_pagerank = {node: pr for node, pr in zip(ig_GBA.vs["name"], ig_pagerank)}
-        PR = mean_dic(nx_pagerank)
+        #PR = mean_dic(nx_pagerank)
         ig_core_number = ig_GBA.coreness()
-        nx_core_number = {node: cn for node, cn in zip(ig_GBA.vs["name"], ig_core_number)}
-        KC = mean_dic(nx_core_number)
+        #nx_core_number = {node: cn for node, cn in zip(ig_GBA.vs["name"], ig_core_number)}
+        #KC = mean_dic(nx_core_number)
 
-        lista_final.append((k,C,CLC,BC,EC,SPL,PC,IC,SC,AC,PR,KC))
+        lista_final.append((k,C,CLC,BC,EC,SPL,PC,IC,SC,AC))#,PR,KC))
     print(f'Finding network info took: {time.time()-tic} seconds')
-    df_caracterizadores = pd.DataFrame(lista_final,columns = ['k','C','CLC','BC','EC','SPL','PC','IC','SC','AC','PR','KC'])
+    df_caracterizadores = pd.DataFrame(lista_final,columns = ['k','C','CLC','BC','EC','SPL','PC','IC','SC','AC'])#,'PR','KC'])
     df_caracterizadores = df_caracterizadores.dropna() 
     #print(df_barabasi)
     # export_csv = df_barabasi.to_csv(r'Erdos_TM.csv', index = None, header=['C','CLC','BC','EC','SPL','PC','IC','SC','AC','PR','KC','tempo'])
@@ -274,7 +241,7 @@ for i in [8]:#range(0,:len(experiments)):
 
 
     from joblib import Parallel, delayed
-    lista_final = Parallel(n_jobs=30)(delayed(simulate_qvoter)(k) for k in range(n_redes))
+    lista_final = Parallel(n_jobs=18)(delayed(simulate_qvoter)(k) for k in range(n_redes))
     df_result = pd.DataFrame(lista_final, columns=['k', 'total_changes', 'tempo'])
     result = pd.merge(df_caracterizadores, df_result, on="k")
     result = result.drop('k', axis=1)
